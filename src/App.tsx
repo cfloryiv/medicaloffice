@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import { Route} from 'react-router-dom';
+
+import {Header} from './Header';
+import {Navigation} from './Navagation';
+import { PatientPortal } from './PatientPortal';
+import { EmployeePortal } from './EmployeePortal';
+import { AdminPortal } from './AdminPortal';
+import { Container } from 'react-bootstrap';
+
+
+import API from './api';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+ 
+    const token= {
+      userid: "cfloryiv",
+      password: "pw",
+      admin: true,
+      doctor: false
+    }
+
+
+
+    return (
+      <Container>
+        <Route path='/' component = {Header} />
+        <Route exact path='/' component={Navigation} />
+        <Route exact path='/patientportal' component={PatientPortal}/>
+        <Route exact path='/employeeportal' component={EmployeePortal}/>
+        <Route exact path='/adminportal' component={AdminPortal}/>
+      </Container>
+    );
+  }
 
 export default App;
