@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Row, Col, Card, Form } from 'react-bootstrap';
 import { Form as Formx, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import API from './api';
+import {SessionContext} from './App';
 
 interface ADDRESS  {
     name: string,
+    street: string,
+    city: string,
+    state: string,
+    zipcode: string,
+    telephone: string,
+    email: string,
 }
 
 
@@ -22,6 +30,7 @@ const SignupSchema = Yup.object().shape({
       .max(2, 'must be 2 characters')
       .required('Required'),
       zipcode: Yup.string()
+      .min(5, 'must be 5 characters')
       .max(5, 'must be 5 characters')
       .required('Required'),
       telephone: Yup.string()
@@ -29,7 +38,41 @@ const SignupSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
   });
 
-  export const PatientProfile = () => (  
+  export function PatientProfile() {
+
+    const token=useContext(SessionContext);
+
+    const [address, setaddress]=useState({_id: "", userid: token.userid, name: "", street: "", city: "", state: "", zipcode: "", telephone: "", email: ""});
+   
+    useEffect(() => {
+        async function getAddress() {
+            
+            await API.get(`api/dental/addresses?userid=${token.userid}`)
+                .then(res => {
+                    let addressx=res.data[0];
+                    setaddress(addressx);
+            });
+        }
+        getAddress();
+    }, [token]);
+
+    async function submitHandler(values: ADDRESS) {
+        console.log(address);
+        if (address===undefined) {
+            // post
+            await API.post(`api/dental/addresses`, {...values, userid: token.userid})
+                .then(res => {
+                    console.log(res.data);
+                });
+        } else {
+            // put
+            await API.put(`api/dental/addresses/${address._id}`, values)
+                .then(res => {
+                    console.log(res.data);
+                });
+        }
+    }
+      return (
             <>
                 <Row>
                     <Col md={{ span: 6, offset: 1 }}>
@@ -37,13 +80,18 @@ const SignupSchema = Yup.object().shape({
                             <h5 style={{ backgroundColor: 'white' }}>Address Form</h5>
                             <Col md={{ span: 10, offset: 1 }}>
                                 <Formik 
-                                    initialValues={{ name: ""}}
-                                    onSubmit={values => {
-                                        console.log(values);
-                                    }}
+                                    enableReinitialize={true}
+                                    initialValues={{name: address?.name ?? "",
+                                                    street: address?.street ?? "",
+                                                    city: address?.city ?? "",
+                                                    state: address?.state ?? "",
+                                                    zipcode: address?.zipcode ?? "",
+                                                    telephone: address?.telephone ?? "",
+                                                    email: address?.email ?? ""}}
+                                    onSubmit={submitHandler}
                                     validationSchema={SignupSchema}
                                     >
-                                        {({errors}) => (
+                                        {() => (
                                         <Formx>
 
                                             <Form.Group>
@@ -88,3 +136,4 @@ const SignupSchema = Yup.object().shape({
                 </Row>
             </>
         );
+    }
