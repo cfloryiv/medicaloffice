@@ -21,7 +21,7 @@ export function PatientPortal() {
      </Row>
      <Row>
          <Col md={{ span: 6, offset: 1 }}>
-             <h4 onClick={() => history.push('/patientschedule')}>Schedule</h4>
+             <h4 onClick={() => history.push('/patientschedule')}>Upcoming Appointments</h4>
          </Col>
      </Row>
      <Row>

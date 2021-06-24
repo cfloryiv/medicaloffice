@@ -14,6 +14,7 @@ import GuardedRoute from './GuardedRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { PatientAppointments } from './PatientAppointments';
 
 const token= {
   userid: "cfloryiv",
@@ -35,10 +36,15 @@ export default function App() {
         <div>
         <Route path='/' component = {Header} />
         <Route exact path='/' component={Navigation} />
-        <GuardedRoute exact path='/patientportal' component={PatientPortal} auth={!token.employee}/>
+        
         <GuardedRoute exact path='/employeeportal' component={EmployeePortal} auth={token.employee}/>
+
         <GuardedRoute exact path='/adminportal' component={AdminPortal} auth={token.admin}/>
+
+        <GuardedRoute exact path='/patientportal' component={PatientPortal} auth={!token.employee}/>
         <GuardedRoute exact path='/patientprofile' component={PatientProfile} auth={!token.employee}/>
+        <GuardedRoute exact path='/patientschedule' component={PatientAppointments} auth={!token.employee}/>
+        
         <Route exact path='/schedule' render={() => <Schedule allowUpdate={true}/>} />
         <Route exact path='/scheduleportal' component={SchedulePortal}/>
         <Route exact path='/todaysschedule' component={TodaysSchedule}/>
