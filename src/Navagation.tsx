@@ -15,7 +15,7 @@ export function Navigation() {
    
      <Row>
          <Col md={{ span: 6, offset: 1 }}>
-             <h4 onClick={() => handleLink('/schedule')}>Schedule</h4>
+             <h4 onClick={() => handleLink('/scheduleportal')}>Schedule Portal</h4>
          </Col>
      </Row>
      <Row>

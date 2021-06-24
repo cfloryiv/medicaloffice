@@ -7,7 +7,10 @@ import { PatientPortal } from './PatientPortal';
 import { EmployeePortal } from './EmployeePortal';
 import { AdminPortal } from './AdminPortal';
 import { PatientProfile} from './PatientProfile';
-
+import { Schedule } from './Schedule';
+import { SchedulePortal } from './SchedulePortal';
+import { TodaysSchedule} from './TodaysSchedule';
+import GuardedRoute from './GuardedRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -16,7 +19,10 @@ const token= {
   userid: "cfloryiv",
   password: "pw",
   admin: true,
-  doctor: false
+  employee: false,
+  employees: [
+    "doctor1", "doctor2", "employee1", "employee2"
+  ]
 }
 
 export const SessionContext = React.createContext(token);
@@ -29,10 +35,13 @@ export default function App() {
         <div>
         <Route path='/' component = {Header} />
         <Route exact path='/' component={Navigation} />
-        <Route exact path='/patientportal' component={PatientPortal}/>
-        <Route exact path='/employeeportal' component={EmployeePortal}/>
-        <Route exact path='/adminportal' component={AdminPortal}/>
-        <Route exact path='/patientprofile' component={PatientProfile}/>
+        <GuardedRoute exact path='/patientportal' component={PatientPortal} auth={!token.employee}/>
+        <GuardedRoute exact path='/employeeportal' component={EmployeePortal} auth={token.employee}/>
+        <GuardedRoute exact path='/adminportal' component={AdminPortal} auth={token.admin}/>
+        <GuardedRoute exact path='/patientprofile' component={PatientProfile} auth={!token.employee}/>
+        <Route exact path='/schedule' render={() => <Schedule allowUpdate={true}/>} />
+        <Route exact path='/scheduleportal' component={SchedulePortal}/>
+        <Route exact path='/todaysschedule' component={TodaysSchedule}/>
         </div>
         </SessionContext.Provider>
     );

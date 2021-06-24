@@ -4,6 +4,7 @@ import { Form as Formx, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import API from './api';
 import {SessionContext} from './App';
+import { useHistory} from 'react-router-dom';
 
 interface ADDRESS  {
     name: string,
@@ -40,6 +41,8 @@ const SignupSchema = Yup.object().shape({
 
   export function PatientProfile() {
 
+    const history=useHistory();
+        
     const token=useContext(SessionContext);
 
     const [address, setaddress]=useState({_id: "", userid: token.userid, name: "", street: "", city: "", state: "", zipcode: "", telephone: "", email: ""});
@@ -71,6 +74,7 @@ const SignupSchema = Yup.object().shape({
                     console.log(res.data);
                 });
         }
+        
     }
       return (
             <>
@@ -125,8 +129,8 @@ const SignupSchema = Yup.object().shape({
                                                 <ErrorMessage component="span" name="email" />
                                             </Form.Group>
                                            
-                                            <button className="btn btn-primary" type="submit">Save</button>
-                                            <button className="btn btn-secondary" >Cancel</button>
+                                            <button className="btn btn-primary" type="submit" onClick={() => history.goBack()}>Save</button>
+                                            <button className="btn btn-secondary" type="button" onClick={() => history.goBack()} >Cancel</button>
                                         </Formx>
                                     )}
                                 </Formik>
