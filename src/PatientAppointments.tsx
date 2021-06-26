@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import { SessionContext } from './App';
 import API from './api';
 
@@ -28,10 +28,13 @@ export function PatientAppointments() {
 
     return (
         <>
-            <h1>Upcoming Appointments</h1>
+    <Container>
+        <Card>
+            <h4 style={{textAlign: 'center'}}>Upcoming Appointments</h4>
             {appts.length === 0
                 ? <h4>No appointments scheduled</h4>
-                : (
+                : (<Row>
+                    <Col md={{ span: 6, offset: 1 }}>
                     <table className="table">
                         <thead>
                             <tr>
@@ -49,7 +52,11 @@ export function PatientAppointments() {
                             ))}
                         </tbody>
                     </table>
+                    </Col>
+                    </Row>
                 )}
+                </Card>
+                </Container>
         </>
     )
 }

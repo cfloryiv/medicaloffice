@@ -1,21 +1,19 @@
 h4 {
-  background-color: cyan;
+  background-color: lightskyblue;
   height: 2em;
 }
 h4:hover {
   background-color: blue;
 }
-h5 {
-  background-color: red;
-}
+
 .card {
-  background-color: lightpink;
+  background-color: #f5f5f5;
 }
 .table th {
-  background-color: mediumseagreen;
+  background-color: lightskyblue;
 }
 .table td {
-  background-color: lightgreen;
+  background-color: white;
 }
 span {
   color: red;
@@ -23,12 +21,13 @@ span {
 .cell {
   border: 1px black solid;
   height: 2em;
-  background-color: lightcoral;
+  background-color: green;
+  color: white;
 }
 .emptycell {
   border: 1px black solid;
   height: 2em;
-  background-color: lightgreen;
+  background-color: whitesmoke;
 }
 .timecell {
   text-align: right;

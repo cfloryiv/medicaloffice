@@ -10,6 +10,8 @@ import { PatientProfile} from './PatientProfile';
 import { Schedule } from './Schedule';
 import { SchedulePortal } from './SchedulePortal';
 import { TodaysSchedule} from './TodaysSchedule';
+import { ProceduresEditor } from './ProceduresEditor';
+import { InsurancesEditor } from './InsurancesEditor';
 import GuardedRoute from './GuardedRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,6 +25,9 @@ const token= {
   employee: false,
   employees: [
     "doctor1", "doctor2", "employee1", "employee2"
+  ],
+  insurance: [
+    "Aetna", "Blue Cross", "Medicare", "Self Insured", "Tufts"
   ]
 }
 
@@ -40,6 +45,8 @@ export default function App() {
         <GuardedRoute exact path='/employeeportal' component={EmployeePortal} auth={token.employee}/>
 
         <GuardedRoute exact path='/adminportal' component={AdminPortal} auth={token.admin}/>
+        <GuardedRoute exact path='/procedureseditor' component={ProceduresEditor} auth={token.admin}/>
+        <GuardedRoute exact path='/insuranceseditor' component={InsurancesEditor} auth={token.admin}/>
 
         <GuardedRoute exact path='/patientportal' component={PatientPortal} auth={!token.employee}/>
         <GuardedRoute exact path='/patientprofile' component={PatientProfile} auth={!token.employee}/>

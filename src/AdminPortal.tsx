@@ -20,12 +20,12 @@ export function AdminPortal() {
      </Row>
      <Row>
          <Col md={{ span: 6, offset: 1 }}>
-             <h4 onClick={() => handleLink('/patientschedule')}>Insurance</h4>
+             <h4 onClick={() => handleLink('/insuranceseditor')}>Insurance Editor</h4>
          </Col>
      </Row>
      <Row>
          <Col md={{ span: 6, offset: 1 }}>
-             <h4 onClick={() => handleLink('/patientbilling')}>Procedures</h4>
+             <h4 onClick={() => handleLink('/procedureseditor')}>Procedures Editor</h4>
          </Col>
      </Row>
      <Row>
