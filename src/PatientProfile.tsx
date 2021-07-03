@@ -80,8 +80,8 @@ const SignupSchema = Yup.object().shape({
             <>
                 <Row>
                     <Col md={{ span: 6, offset: 1 }}>
-                        <Card style={{ backgroundColor: 'white' }}>
-                            <h5 style={{ backgroundColor: 'white' }}>Address Form</h5>
+                        <Card>
+                            <h5>Address Form</h5>
                             <Col md={{ span: 10, offset: 1 }}>
                                 <Formik 
                                     enableReinitialize={true}

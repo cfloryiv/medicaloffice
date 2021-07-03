@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Col, Row} from 'react-bootstrap';
+import {Col, Row, Card, Container} from 'react-bootstrap';
 import API from './api';
 import {SessionContext} from './App';
 
@@ -129,6 +129,8 @@ export function Schedule(props: {allowUpdate: boolean}) {
     }
     return (
         <>
+         <Container>
+        <Card>
             <h1 style={{ textAlign: "center"}}>Schedule for: {dates[0]} to {dates[4]}</h1>
             
             <div style={{textAlign: "center", margin: "1em"}}>
@@ -168,6 +170,8 @@ export function Schedule(props: {allowUpdate: boolean}) {
                     ))}
                 </Row>
             ))}
+            </Card>
+            </Container>
             </>
     );
     

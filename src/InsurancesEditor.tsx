@@ -65,20 +65,32 @@ export function InsurancesEditor() {
             getProcedures();
             setStartup(false);
         }
-        
-        setInsurances(insurancex);
+        async function getInsurance() {
+            await API.get(`api/dental/insurances?name=${insurances.name}`)
+                .then(res=> {
+                    setInsurances(res.data[0]);
+                })
+        }
+        getInsurance();
+        //setInsurances(insurancex);
 
     }, [refresh]);
 
-    async function refreshTable(e: React.ChangeEvent<HTMLInputElement>) {
-        await API.get(`api/dental/insurances?name=${e.target.value}`)
-        .then(res => {
-            if (res.data[0] === undefined) {
-                setInsurances(res.data[0]);
-            } else {
-                setInsurances(res.data[0]);
-            }
-        });
+    async function refreshTable(name: string) {
+        await API.get(`api/dental/insurances?name=${name}`)
+            .then(res => {
+                if (res.data[0] === undefined) {
+                    insurancex={name: "", policies: []};
+                    insurancex.name=name;
+                    insurancex.policies=[];
+                    setInsurances(insurancex);
+                    //setInsurances(res.data[0]);
+                } else {
+                    setInsurances(res.data[0]);
+                }
+            });
+        await console.log(insurances);
+         
     }
     async function submitHandler(values: any) {
 
@@ -90,28 +102,21 @@ export function InsurancesEditor() {
             deduct: values.deduct,
             max: values.max,
         }
-        let index=insurancesx.policies.findIndex((pol) => {
-            return policy.code===pol.code;
+        let index = insurancesx.policies.findIndex((pol) => {
+            return policy.code === pol.code;
         });
-        if (index===-1) {
+        if (index === -1) {
             insurancesx.policies.push(policy);
         } else {
-            insurancesx.policies[index]=policy;
+            insurancesx.policies[index] = policy;
         }
-        await API.put(`api/dental/insurances?name=${insurancesx.name}`, insurancesx)
-        .then(res => {
-            console.log(res.data);
-        });
-        await API.get(`api/dental/insurances?name=${insurancesx.name}`)
-        .then(res => {
-            if (res.data[0] === undefined) {
-                setInsurances(res.data[0]);
-            } else {
-                setInsurances(res.data[0]);
-            }
-        });
-        await setRefresh(refresh+1);
-
+        await API.put(`api/dental/insurances?name=${insurances.name}`, insurancesx)
+            .then(res => {
+                console.log(res.data);
+            });
+        await setInsurances(insurancesx);
+        
+        await setTimeout(()=>setRefresh(refresh+1), 2000);
     }
     const tableBody: any[] = [];
     if (insurances !== undefined) {
@@ -130,23 +135,10 @@ export function InsurancesEditor() {
     return (
         <>
             <Row>
-                <Col md={{ span: 6, offset: 1 }}>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Insurance</th><th>Code</th><th>Percent</th><th>deductable</th><th>Maximum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tableBody}
-                        </tbody>
-                    </Table>
-                </Col>
-            </Row>
-            <Row>
-                <Col md={{ span: 6, offset: 1 }}>
-                    <Card style={{ backgroundColor: 'white' }}>
-                        <h5 style={{ backgroundColor: 'white' }}>Procedures Form</h5>
+                
+                <Col md={{ span: 4, offset: 1 }}>
+                    <Card >
+                        <h5 >Insurance Form</h5>
                         <Col md={{ span: 10, offset: 1 }}>
                             <Formik
                                 enableReinitialize={true}
@@ -165,12 +157,12 @@ export function InsurancesEditor() {
 
                                         <Form.Group>
                                             <Form.Label>Insurance</Form.Label>
-                                            <Field as="select" 
-                                                className="form-control" 
-                                                name="name" 
+                                            <Field as="select"
+                                                className="form-control"
+                                                name="name"
                                                 type="text"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>)=> refreshTable(e)}
-                                                >
+                                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => refreshTable(e.target.value)}
+                                            >
                                                 <option disabled>Select an option</option>
                                                 {token.insurance.map((ins, key) => (
                                                     <option key={key} value={ins}>{ins}</option>
@@ -180,8 +172,8 @@ export function InsurancesEditor() {
                                         </Form.Group>
                                         <Form.Group>
                                             <Form.Label>Procedure</Form.Label>
-                                            <Field as ="select" className="form-control" name="code" type="text">
-                                            <option disabled>Select an option</option>
+                                            <Field as="select" className="form-control" name="code" type="text">
+                                                <option value='' defaultValue=''>Select an option</option>
                                                 {procedures.map((proc, key) => (
                                                     <option key={key} value={proc.code}>{proc.desc}</option>
                                                 ))}
@@ -211,6 +203,24 @@ export function InsurancesEditor() {
                         </Col>
                     </Card>
                 </Col>
+                <Col md={{ span: 5, offset: 1 }}>
+                    <Card >
+                        <h5 >Insurance List</h5>
+                        <Col md={{ span: 10, offset: 1 }}>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Insurance</th><th>Code</th><th>Percent</th><th>deductable</th><th>Maximum</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tableBody}
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Card>
+                </Col>
+      
             </Row >
         </>
     );

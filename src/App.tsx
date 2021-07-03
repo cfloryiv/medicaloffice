@@ -12,6 +12,9 @@ import { SchedulePortal } from './SchedulePortal';
 import { TodaysSchedule} from './TodaysSchedule';
 import { ProceduresEditor } from './ProceduresEditor';
 import { InsurancesEditor } from './InsurancesEditor';
+import { PatientProcedures } from './PatientProcedures';
+import { AdminDayEnd } from './AdminDayEnd';
+
 import GuardedRoute from './GuardedRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,11 +50,13 @@ export default function App() {
         <GuardedRoute exact path='/adminportal' component={AdminPortal} auth={token.admin}/>
         <GuardedRoute exact path='/procedureseditor' component={ProceduresEditor} auth={token.admin}/>
         <GuardedRoute exact path='/insuranceseditor' component={InsurancesEditor} auth={token.admin}/>
+        <GuardedRoute exact path='/admindayend' component={AdminDayEnd} auth={token.admin}/>
 
         <GuardedRoute exact path='/patientportal' component={PatientPortal} auth={!token.employee}/>
         <GuardedRoute exact path='/patientprofile' component={PatientProfile} auth={!token.employee}/>
         <GuardedRoute exact path='/patientschedule' component={PatientAppointments} auth={!token.employee}/>
-        
+        <GuardedRoute exact path='/patientprocedures' component={PatientProcedures} auth={!token.employee}/>
+
         <Route exact path='/schedule' render={() => <Schedule allowUpdate={true}/>} />
         <Route exact path='/scheduleportal' component={SchedulePortal}/>
         <Route exact path='/todaysschedule' component={TodaysSchedule}/>

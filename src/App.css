@@ -7,7 +7,7 @@ h4:hover {
 }
 
 .card {
-  background-color: #f5f5f5;
+  background-color: #ecf1f5;
 }
 .table th {
   background-color: lightskyblue;
@@ -21,7 +21,7 @@ span {
 .cell {
   border: 1px black solid;
   height: 2em;
-  background-color: green;
+  background-color: lightskyblue;
   color: white;
 }
 .emptycell {

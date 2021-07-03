@@ -35,7 +35,7 @@ export function AdminPortal() {
      </Row>
      <Row>
          <Col md={{ span: 6, offset: 1 }}>
-             <h4 onClick={() => handleLink('/patientprocedures')}>Day End</h4>
+             <h4 onClick={() => handleLink('/admindayend')}>Day End</h4>
          </Col>
      </Row>
      <Row>
