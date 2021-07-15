@@ -5,10 +5,10 @@ import API from './api';
 
 
 
-export function PatientProcedures() {
+export function PatientBilling() {
 
     const token = useContext(SessionContext);
-    const [billDesc, setBillDesc] = useState([{ date: "", desc: "", name: "" }]);
+    const [billDesc, setBillDesc] = useState([{ date: "", desc: "", name: "", insurance: "", cost: 0, insurance_portion: 0, balance: 0 }]);
     useEffect(() => {
 
         async function update() {
@@ -22,7 +22,7 @@ export function PatientProcedures() {
         <>
             <Container>
                 <Card>
-                    <h4 style={{ textAlign: 'center' }}>Patient Procedures</h4>
+                    <h4 style={{ textAlign: 'center' }}>Patient Billing</h4>
                     {billDesc.length === 0
                         ? <h4>No Procedures</h4>
                         : (<Row>
@@ -31,6 +31,7 @@ export function PatientProcedures() {
                                     <thead>
                                         <tr>
                                             <th>Date</th><th>Procedure</th><th>Doctor</th>
+                                            <th>Insurance</th><th>Cost</th><th>Insurance Pays</th><th>Balance</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -39,6 +40,10 @@ export function PatientProcedures() {
                                                 <td>{bill.date}</td>
                                                 <td>{bill.desc}</td>
                                                 <td>{bill.name}</td>
+                                                <td>{bill.insurance}</td>
+                                                <td>{bill.cost.toFixed(2)}</td>
+                                                <td>{bill.insurance_portion.toFixed(2)}</td>
+                                                <td>{bill.balance.toFixed(2)}</td>
                                             </tr>
                                         ))}
                                     </tbody>

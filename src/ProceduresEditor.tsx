@@ -126,7 +126,7 @@ export function ProceduresEditor() {
                                         <tr key={key}>
                                             <td>{proc.code}</td>
                                             <td>{proc.desc}</td>
-                                            <td>{proc.cost}</td>
+                                            <td>{proc.cost.toFixed(2)}</td>
                                             <td>{proc.length}</td>
                                         </tr>
                                     ))}

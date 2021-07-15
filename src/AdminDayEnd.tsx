@@ -307,7 +307,7 @@ function PatientPortionField(props: any) {
             className="form-control"
             type={props.type}
             name={props.name}
-            value={props.values.patient_portion}
+            value={props.values.patient_portion.toFixed(2)}
         />
     );
 }
@@ -349,7 +349,7 @@ async function convertPromiseToInsurance(props: any) {
             className="form-control"
             type={props.type}
             name={props.name}
-            value={props.values.insurance_portion}
+            value={props.values.insurance_portion.toFixed(2)}
         />
     );
 }
@@ -370,7 +370,7 @@ function CostField(props: any) {
             className="form-control"
             type={props.type}
             name={props.name}
-            value={props.values.cost}
+            value={props.values.cost.toFixed(2)}
         />
     );
 }

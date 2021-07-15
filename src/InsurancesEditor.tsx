@@ -125,9 +125,9 @@ export function InsurancesEditor() {
                 <tr key={key}>
                     <td>{insurances.name}</td>
                     <td>{proc.code}</td>
-                    <td>{proc.percent}</td>
-                    <td>{proc.deduct}</td>
-                    <td>{proc.max}</td>
+                    <td>{proc.percent.toFixed(2)}</td>
+                    <td>{proc.deduct.toFixed(2)}</td>
+                    <td>{proc.max.toFixed(2)}</td>
                 </tr>
             )
         })
