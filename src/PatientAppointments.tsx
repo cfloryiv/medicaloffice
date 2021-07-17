@@ -7,7 +7,7 @@ import API from './api';
 export function PatientAppointments() {
 
     const token = useContext(SessionContext);
-    const apptsx: { date: string, time: string, name: string, _id: string, userid: string, empid: string }[]=[];
+    const apptsx: { doctorName: string, date: string, time: string, name: string, _id: string, userid: string, empid: string }[]=[];
     const [appts, setAppts] = useState(apptsx);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ export function PatientAppointments() {
                                 <tr key={index}>
                                     <td>{appt.date}</td>
                                     <td>{appt.time}</td>
-                                    <td>{appt.empid}</td>
+                                    <td>{appt.doctorName}</td>
                                     <td>{appt.name}</td>
                                 </tr>
                             ))}
